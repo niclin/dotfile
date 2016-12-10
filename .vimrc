@@ -1,5 +1,6 @@
 " don't ther with vi compatibility
 set nocompatible
+filetype off                  " required
 
 " enable syntax highlighting
 syntax enable
@@ -17,7 +18,7 @@ if !filereadable(vundle_readme)
 endif
 
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#rc()
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
