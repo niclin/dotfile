@@ -1,9 +1,7 @@
-" don't ther with vi compatibility
-set nocompatible
-filetype off                  " required
-
-" enable syntax highlighting
-syntax enable
+"----------------- Vundle ----------------
+"
+set nocompatible             " not compatible with the old-fashion vi mode
+filetype off                 " required!
 
 " http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
 " Setting up Vundle - the vim plugin bundler
@@ -13,16 +11,16 @@ if !filereadable(vundle_readme)
   echo "Installing Vundle.."
   echo ""
   silent !mkdir -p ~/.vim/bundle
-  silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
   let iCanHazVundle=0
 endif
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
 
 " let Vundle manage Vundle
 " required!
-Plugin 'VundleVim/Vundle.vim'
+Bundle 'gmarik/vundle'
 
 " My Bundles here:
 "
@@ -43,18 +41,8 @@ Bundle 'mattn/emmet-vim'
 Bundle 'bling/vim-airline'
 Bundle 'evanmiller/nginx-vim-syntax'
 
-" configure Vundle
-filetype on " without this vim emits a zero exit status, later, because of :ft off
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" install Vundle bundles
-if filereadable(expand("~/.vimrc.bundles"))
-  source ~/.vimrc.bundles
-endif
-
-call vundle#end()
+"
+"----------------- End Vundle --------------
 
 " ensure ftdetect et al work by including this after the Vundle stuff
 filetype plugin indent on
