@@ -44,7 +44,8 @@ set softtabstop=2                                            " insert mode tab a
 set tabstop=8                                                " actual tabs occupy 8 characters
 set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 set wildmenu                                                 " show a navigable menu for tab completion
-set wildmode=longest,list,full
+set wildmode=longest,list,full 
+colors solarized_dark                                        " vim color scheme
 
 " Enable basic mouse behavior such as resizing buffers.
 set mouse=a
@@ -86,6 +87,7 @@ if executable('ag')
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
+
 
 " fdoc is yaml
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
