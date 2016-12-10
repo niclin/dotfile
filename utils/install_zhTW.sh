@@ -6,6 +6,7 @@
 
 vim_folder=~/.vim
 vim_rc=~/.vimrc
+vim_bundles=~/.vimrc.bundles
 backup_rand=$RANDOM
 
 # detect if there's a .vim folder
@@ -45,6 +46,7 @@ echo ""
 echo "即將替您安裝Nic's dotfile："
 echo ""
 ln -s $vim_folder/.vimrc $vim_rc
+ln -s $vim_folder/.vimrc.bundles $vim_bundles
 
 echo "完成安裝"
 
