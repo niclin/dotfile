@@ -12,7 +12,7 @@ if !filereadable(vundle_readme)
   echo "Installing Vundle.."
   echo ""
   silent !mkdir -p ~/.vim/bundle
-  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+  silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/vundle
   let iCanHazVundle=0
 endif
 
@@ -175,15 +175,6 @@ set nocursorline " don't highlight current line
 
 " keyboard shortcuts
 inoremap jj <ESC>
-
-" gui settings
-if (&t_Co == 256 || has('gui_running'))
-  if ($TERM_PROGRAM == 'iTerm.app')
-    colorscheme solarized
-  else
-    colorscheme desert
-  endif
-endif
 
 if has('vim_starting')
   if executable('w')
