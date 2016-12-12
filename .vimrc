@@ -58,7 +58,7 @@ set softtabstop=2                                            " insert mode tab a
 set tabstop=8                                                " actual tabs occupy 8 characters
 set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 set wildmenu                                                 " show a navigable menu for tab completion
-set wildmode=longest,list,full 
+set wildmode=longest,list,full
 colors solarized_dark                                        " vim color scheme
 
 " Enable basic mouse behavior such as resizing buffers.
@@ -357,6 +357,55 @@ endfunction "}}}
 
 
 set secure
+
+
+
+xmap <CR> <Plug>(EasyAlign)
+xmap <LocalLeader>A <Plug>(EasyAlign)
+let g:easy_align_interactive_modes = ['l', 'a']
+let g:easy_align_ignore_unmatched  = 0
+
+" }}}2   Context sensitive H,L.     {{{2
+
+" Ref: tyru - https://github.com/tyru/dotfiles
+" TODO 內部也統一使用 s:scroll_up / down
+nnoremap <silent> H :<C-u>call HContext()<CR>
+nnoremap <silent> L :<C-u>call LContext()<CR>
+xnoremap <silent> H <ESC>:<C-u>call HContext()<CR>mzgv`z
+xnoremap <silent> L <ESC>:<C-u>call LContext()<CR>mzgv`z
+
+function! HContext()
+  let l:moved = MoveCursor("H")
+  if !l:moved && line('.') != 1
+    " execute "normal! " . "\<ScrollWheelUp>H"
+    execute "normal! " . "5kH"
+  endif
+endfunction
+
+function! LContext()
+  let l:moved = MoveCursor("L")
+
+  if !l:moved && line('.') != line('$')
+    " execute "normal! " . "\<ScrollWheelDown>L"
+    execute "normal! " . "5jL"
+  endif
+endfunction
+
+function! MoveCursor(key)
+  let l:cnum = col('.')
+  let l:lnum = line('.')
+  let l:wline = winline()
+
+  execute "normal! " . v:count1 . a:key
+  let l:moved =
+        \ l:cnum  != col('.')  ||
+        \ l:lnum  != line('.') ||
+        \ l:wline != winline()
+
+  return l:moved
+endfunction
+
+
 
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
 
