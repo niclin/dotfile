@@ -86,6 +86,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+
+
+# 進terminal自動開啟tmux
 if which tmux 2>&1 >/dev/null; then
   # create session 0 if not exists
   if ! tmux has-session -t 0; then
