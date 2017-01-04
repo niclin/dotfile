@@ -1,4 +1,4 @@
-DEFAULT_USER=" Nic"
+DEFAULT_USER=" Nic in vagrant"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -258,7 +258,8 @@ alias rc='rails console development'
 alias bi='bundel install'
 alias gs='git status'
 
-# chruby
+
+# chrruby
 # 1) 基本的 source chruby function
 # 2) 切換目錄時，自動依 .ruby-version 切換 ruby
 if [ -e /etc/profile.d/chruby.sh ]; then
@@ -269,7 +270,5 @@ elif [ -e /usr/local/share/chruby/chruby.sh ]; then
   source /usr/local/share/chruby/chruby.sh
   test -e /usr/local/share/chruby/auto.sh && source /usr/local/share/chruby/auto.sh
 fi
-
-
 # vim: filetype=zsh
 
