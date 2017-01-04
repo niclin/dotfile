@@ -86,13 +86,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-if which tmux 2>&1 >/dev/null; then
-  # create session 0 if not exists
-  if ! tmux has-session -t 0; then
-    tmux new-session
-  fi
-fi
-
 #disable START/STOP output control (<C-S>, <C-Q>)
 stty -ixon
 
