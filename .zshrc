@@ -11,6 +11,8 @@ DEFAULT_USER=" Nic"
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
 
+export PATH="$HOME/.tmuxifier/bin:$PATH"
+export EDITOR=vim
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -97,24 +99,19 @@ fi
 #disable START/STOP output control (<C-S>, <C-Q>)
 stty -ixon
 
-
-
-# 檢查 ruby 語法
-# Check changed *.(rb|jbuilder) files, except for Deleted, Renamed and Copied ones.
-# Arguments will be delegated to git-diff --name-only.
 cop() {
+  local exts=('rb,thor,jbuilder')
+  local excludes=':(top,exclude)db/schema.rb'
   local extra_options='--display-cop-names --rails'
   if [[ $# -gt 0 ]]; then
-    if git diff --name-only $@ -- **/*.(rb|jbuilder) > /dev/null; then
-      git diff --name-only $@ -- **/*.(rb|jbuilder) | xargs rubocop `echo $extra_options`
-    fi
+    local files=$(eval "git diff $@ --name-only -- *.{$exts} $excludes")
   else
-    local files="$(gits --porcelain -- **/*.(rb|jbuilder) | sed -e '/^\s\?[DRC] /d' -e 's/^.\{3\}//g')"
-    if [[ -n "$files" ]]; then
-      echo $files | xargs rubocop `echo $extra_options`
-    else
-      echo "Nothing to check. Write some *.(rb|jbuilder) to check.\nYou have 20 seconds to comply."
-    fi
+    local files=$(eval "git status --porcelain -- *.{$exts} $excludes | sed -e '/^\s\?[DRC] /d' -e 's/^.\{3\}//g'")
+  fi
+  if [[ -n "$files" ]]; then
+    echo $files | xargs bundle exec rubocop `echo $extra_options`
+  else
+    echo "Nothing to check. Write some *.{$exts} to check.\nYou have 20 seconds to comply."
   fi
 }
 
@@ -255,6 +252,9 @@ alias ll='ls -l'
 alias rc='rails console development'
 alias bi='bundel install'
 alias gs='git status'
+alias rcop='git status --porcelain | cut -c4- | grep '.rb' | xargs rubocop'
+alias rlog='tail -f log/development.log'
+alias gotowork='tmuxifier load-window example'
 
 # chruby
 # 1) 基本的 source chruby function
@@ -267,7 +267,4 @@ elif [ -e /usr/local/share/chruby/chruby.sh ]; then
   source /usr/local/share/chruby/chruby.sh
   test -e /usr/local/share/chruby/auto.sh && source /usr/local/share/chruby/auto.sh
 fi
-
-
-# vim: filetype=zsh
 
