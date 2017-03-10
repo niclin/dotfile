@@ -5,7 +5,7 @@
 
 ```
 cd
-git clone --recursive git@github.com:niclin/dotfile.git
+git clone git@github.com:niclin/dotfile.git
 cd dotfiles
 rake install
 ```

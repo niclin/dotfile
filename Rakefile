@@ -10,7 +10,6 @@ desc "install dot files to $HOME directory"
 
 task :install_mac do
   welcome_message
-
   install_oh_my_zsh
   move_zsh_themes
   install_dotfile
