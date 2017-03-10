@@ -12,6 +12,7 @@ task :install_mac do
   welcome_message
 
   install_oh_my_zsh
+  move_zsh_themes
   install_dotfile
 end
 
@@ -97,6 +98,15 @@ def install_oh_my_zsh
   else
     puts 'oh-my-zsh already to install'
   end
+end
+
+def move_zsh_themes
+  source = "#{Dir.pwd}/.oh-my-zsh/themes/agnoster.zsh-theme"
+  target = "#{Dir.home}/.oh-my-zsh/themes/agnoster.zsh-theme"
+
+  run %{ rm -rf #{target}.backup} if File.exists?(target + ".backup")
+  run %{ mv #{target} #{target}.backup}
+  run %{ln -s #{source} #{target}}
 end
 
 def success_msg
