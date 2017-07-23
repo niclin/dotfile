@@ -242,7 +242,7 @@ rserver_restart() {
 alias n='cd nerv'
 alias ll='ls -l'
 alias rc='rails console development'
-alias bi='bundel install'
+alias bi='bundle install'
 alias gs='git status'
 alias rcop='git status --porcelain | cut -c4- | grep '.rb' | xargs rubocop'
 alias rlog='tail -f log/development.log'
