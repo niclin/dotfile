@@ -23,6 +23,9 @@ def run(cmd)
 end
 
 def welcome_message
+  puts GREEN + "░█▄─░█ ▀█▀ ░█▀▀█ ░█─── ▀█▀ ░█▄─░█ " + NONE
+  puts GREEN + "░█░█░█ ░█─ ░█─── ░█─── ░█─ ░█░█░█ " + NONE
+  puts GREEN + "░█──▀█ ▄█▄ ░█▄▄█ ░█▄▄█ ▄█▄ ░█──▀█" + NONE
   puts
   puts GREEN + "======================================================" + NONE
   puts GREEN + "Welcome to Nic Lin's DotFiles Installation."            + NONE
