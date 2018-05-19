@@ -117,6 +117,8 @@ autocmd User Rails silent! Rnavcommand mediator       app/mediators             
 autocmd User Rails silent! Rnavcommand stepdefinition features/step_definitions -glob=**/* -suffix=_steps.rb
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
+"Auto load NERDTree when vim start
+autocmd VimEnter * NERDTree
 
 " Fix Cursor in TMUX
 if exists('$TMUX')
