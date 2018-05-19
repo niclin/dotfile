@@ -23,3 +23,9 @@ wait a second be installment
 #### Fonts
 
 [PowerLine](https://github.com/supermarin/powerline-fonts)
+
+#### Dependence
+
+Mac
+
+`brew install the_silver_searcher`
