@@ -117,12 +117,10 @@ rpy() {
   fi
 }
 
-
-# 重啟 puma/unicorn
+# 重啟 puma
 #
 # - rpu       → 啟動或重啟（如果已有 pid）
 # - rpu kill  → 殺掉 process，不重啟
-# - rpu xxx   → xxx 參數會被丟給 pumactl（不支援 unicorn）
 rpu() {
   emulate -L zsh
   if [[ -d tmp ]]; then
@@ -132,15 +130,13 @@ rpu() {
 
     if [[ -f config/puma.rb ]]; then
       animal='puma'
-    elif [[ -f config/unicorn.rb ]]; then
-      animal='unicorn'
     else
-      echo "No puma/unicorn directory, aborted."
+      echo "No puma directory, aborted."
       return 1
     fi
 
-    if [[ -r tmp/pids/$animal.pid && -n $(ps h -p `cat tmp/pids/$animal.pid` | tr -d ' ') ]]; then
-      pid=`cat tmp/pids/$animal.pid`
+    if [[ -r tmp/pids/server.pid && -n $(ps h -p `cat tmp/pids/server.pid` | tr -d ' ') ]]; then
+      pid=`cat tmp/pids/server.pid`
     fi
 
     if [[ -n $action ]]; then
@@ -163,7 +159,7 @@ rpu() {
             # TODO: control unicorn
             pumactl -p $pid $action
           else
-            echo 'ERROR: "No running PID (tmp/pids/puma.pid).'
+            echo 'ERROR: "No running PID (tmp/pids/server.pid).'
           fi
       esac
     else
@@ -174,9 +170,9 @@ rpu() {
 
         # kill -9 (SIGKILL) for force kill
         kill -9 $pid && echo "Process killed ($pid)."
-        rserver_restart $animal $([[ "$animal" == 'puma' ]] && echo '-d' || echo '-D')
+        rserver_restart $animal $([[ "$animal" == 'puma' ]])
       else
-        rserver_restart $animal $([[ "$animal" == 'puma' ]] && echo '-d' || echo '-D')
+        rserver_restart $animal $([[ "$animal" == 'puma' ]])
       fi
     fi
   else
@@ -184,79 +180,25 @@ rpu() {
   fi
 }
 
-
-# 啟動／停止 sidekiq
-rsidekiq() {
-  emulate -L zsh
-  if [[ -d tmp ]]; then
-    if [[ -r tmp/pids/sidekiq.pid && -n $(ps h -p `cat tmp/pids/sidekiq.pid` | tr -d ' ') ]]; then
-      case "$1" in
-        restart)
-          bundle exec sidekiqctl restart tmp/pids/sidekiq.pid
-          ;;
-        *)
-          bundle exec sidekiqctl stop tmp/pids/sidekiq.pid
-      esac
-    else
-      echo "Start sidekiq process..."
-      nohup bundle exec sidekiq  > ~/.nohup/sidekiq.out 2>&1&
-      disown %nohup
-    fi
-  else
-    echo 'ERROR: "tmp" directory not found.'
-  fi
-}
-
-
-# 啟動／停止 mailcatcher
-rmailcatcher() {
-  local pid=$(ps h -C ruby -o pid,args | noglob grep '/bin/mailcatcher --http-ip' | cut -d' ' -f 1)
-  if [[ -n $pid ]]; then
-    kill $pid && echo "MailCatcher process $pid killed."
-  else
-    nohup mailcatcher --http-ip 0.0.0.0 > ~/.nohup/mailcatcher.out 2>&1&
-    disown %nohup
-  fi
-}
-
-
 # 這是 rpu 會用到的 helper function
 rserver_restart() {
-  local app=${$(pwd):t}
   case "$1" in
     puma)
       shift
-      RAILS_RELATIVE_URL_ROOT=/$app bundle exec puma -C config/puma.rb config.ru $*
-      ;;
-    unicorn)
-      shift
-      RAILS_RELATIVE_URL_ROOT=/$app bundle exec unicorn -c config/unicorn.rb $* && echo 'unicorn running'
+      bundle exec puma -C config/puma.rb config.ru --pidfile "tmp/pids/server.pid"
       ;;
     *)
       echo 'invalid argument'
   esac
 }
 
-
 # 常用 alias
-alias n='cd nerv'
+alias rs='rails s'
+alias n='cd ~/Dropbox/projects/business/growthschool/otcbtc'
 alias ll='ls -l'
-alias rc='rails console development'
+alias rc='rails c'
 alias bi='bundle install'
 alias gs='git status'
 alias rcop='git status --porcelain | cut -c4- | grep '.rb' | xargs rubocop'
 alias rlog='tail -f log/development.log'
 alias gotowork='tmuxifier load-window example'
-
-# chruby
-# 1) 基本的 source chruby function
-# 2) 切換目錄時，自動依 .ruby-version 切換 ruby
-if [ -e /etc/profile.d/chruby.sh ]; then
-  source /etc/profile.d/chruby.sh
-elif [ -e /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
-  source /usr/local/opt/chruby/share/chruby/chruby.sh
-elif [ -e /usr/local/share/chruby/chruby.sh ]; then
-  source /usr/local/share/chruby/chruby.sh
-  test -e /usr/local/share/chruby/auto.sh && source /usr/local/share/chruby/auto.sh
-fi
-
