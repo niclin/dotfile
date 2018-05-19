@@ -112,9 +112,8 @@ if executable('ag')
 endif
 
 " Highlight current line
-autocmd WinLeave * set nocursorline nocursorcolumn
-autocmd WinEnter * set cursorline cursorcolumn
-set cursorline cursorcolumn
+set cursorline
+
 " fdoc is yaml
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 " md is markdown
