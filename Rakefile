@@ -81,7 +81,7 @@ def copy_setting_dirs_to_vim
     source = "#{Dir.pwd}/#{dir}"
     target = "#{Dir.home}/.vim/#{dir}"
 
-    run %{ln -s #{source} #{target}}
+    run %{ln -sF #{source} #{target}}
   end
   success_msg
 end
