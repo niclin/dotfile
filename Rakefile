@@ -8,15 +8,11 @@ NONE  = "\033[0m"
 
 desc "install dot files to $HOME directory"
 
-task :install_mac do
+task :install do
   welcome_message
   install_oh_my_zsh
   move_zsh_themes
   install_dotfile
-end
-
-task :install_ubuntu do
-  puts 'not yet'
 end
 
 private
