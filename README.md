@@ -26,6 +26,13 @@ wait a second be installment
 
 #### Dependence
 
-Mac
+Mac dependency
 
+搜尋神器
 `brew install the_silver_searcher`
+
+tmux 的複製貼上
+`brew install reattach-to-user-namespace`
+
+在 tmux 中顯示 cpu/memory 實時使用量
+`brew install tmux-mem-cpu-load`
