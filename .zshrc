@@ -98,3 +98,6 @@ alias gs='git status'
 alias rcop='git status --porcelain | cut -c4- | grep '.rb' | xargs rubocop'
 alias rlog='tail -f log/development.log'
 alias gotowork='tmuxifier load-window example'
+
+export NVM_DIR="/Users/Nic/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
