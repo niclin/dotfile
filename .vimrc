@@ -8,11 +8,11 @@ filetype off                 " required!
 let iCanHazVundle=1
 let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
 if !filereadable(vundle_readme)
-  echo "Installing Vundle.."
-  echo ""
-  silent !mkdir -p ~/.vim/bundle
-  silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  let iCanHazVundle=0
+echo "Installing Vundle.."
+echo ""
+silent !mkdir -p ~/.vim/bundle
+silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+let iCanHazVundle=0
 endif
 
 " configure Vundle
@@ -90,6 +90,12 @@ nnoremap <leader><space> :call whitespace#strip_trailing()<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
 noremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
+" 連續縮排
+nnoremap < <<
+nnoremap > >>
+vnoremap < <gv
+vnoremap > >gv
+
 " in case you forgot to sudo
 cnoremap w!! %!sudo tee > /dev/null %
 
@@ -133,6 +139,10 @@ autocmd User Rails silent! Rnavcommand mediator       app/mediators             
 autocmd User Rails silent! Rnavcommand stepdefinition features/step_definitions -glob=**/* -suffix=_steps.rb
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
+
+" Enable just for html/css
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
 
 " Fix Cursor in TMUX
 if exists('$TMUX')
