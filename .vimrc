@@ -103,12 +103,22 @@ cnoremap w!! %!sudo tee > /dev/null %
 let g:ctrlp_match_window = 'order:ttb,max:20'
 let g:NERDSpaceDelims=1
 let g:gitgutter_enabled = 0
-" configure syntastic syntax checking to check on open as well as save
-let g:syntastic_check_on_open=1
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+
+
+" Syntastic ------------------------------
+let g:syntastic_vue_tidy_ignore_errors=[" proprietary attribute \"el-"]
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map={'passive_filetypes':['html']}
+" 设置错误符号
+let g:syntastic_error_symbol='✗'
+" 设置警告符号
+let g:syntastic_warning_symbol='⚠'
+" 是否在打开文件时检查
+let g:syntastic_check_on_open=0
+" 是否在保存文件后检查
+let g:syntastic_check_on_wq=1
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -137,6 +147,12 @@ autocmd User Rails silent! Rnavcommand feature        features                  
 autocmd User Rails silent! Rnavcommand job            app/jobs                  -glob=**/* -suffix=_job.rb
 autocmd User Rails silent! Rnavcommand mediator       app/mediators             -glob=**/* -suffix=_mediator.rb
 autocmd User Rails silent! Rnavcommand stepdefinition features/step_definitions -glob=**/* -suffix=_steps.rb
+
+" ------------------------------------------------------------
+"  vim-vue
+" ------------------------------------------------------------
+autocmd BufRead,BufNewFile *.vue setlocal filetype=html syntax=javascript
+
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
@@ -171,10 +187,6 @@ if filereadable(expand("~/.vimrc.local"))
 endif
 
 map <C-n> :NERDTreeToggle<CR>
-
-
-
-set nocursorline " don't highlight current line
 
 " keyboard shortcuts
 inoremap jj <ESC>
