@@ -106,7 +106,6 @@ let g:gitgutter_enabled = 0
 
 
 " Syntastic ------------------------------
-let g:syntastic_vue_tidy_ignore_errors=[" proprietary attribute \"el-"]
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_mode_map={'passive_filetypes':['html']}
@@ -118,6 +117,9 @@ let g:syntastic_warning_symbol='⚠'
 let g:syntastic_check_on_open=0
 " 是否在保存文件后检查
 let g:syntastic_check_on_wq=1
+
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exec = 'eslint'
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
