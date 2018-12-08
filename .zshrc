@@ -88,6 +88,14 @@ rserver_restart() {
   esac
 }
 
+# Open github pull request url from sha
+export GITHUB_UPSTREAM=rails
+
+pr_sha() {
+  git log --merges --ancestry-path --oneline $1..$git_current_branch | grep 'pull request' | tail -n1 | awk '{print $5}' | cut -c2- | xargs -I % open https://github.com/$GITHUB_UPSTREAM/${PWD##*/}/pull/%
+}
+
+
 # 常用 alias
 alias rs='rails s'
 alias n='cd ~/Dropbox/projects/business/growthschool/otcbtc'
