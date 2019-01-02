@@ -90,4 +90,4 @@ brew install vim --with-override-system-vi
 #### TODO
 
 - 確認把 color/ 和 plugin/settings 移到 vim 底下，如果新機器沒有要幫他建立資料夾
-
+- 修復 tmux 底下導航字體存在 github 問題
