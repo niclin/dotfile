@@ -72,3 +72,16 @@ Mac 下必須要安裝相關依賴
 - 視窗水平切割：<kbd>`</kbd> + <kbd>-</kbd>
 - 切到上一個 window：<kbd>`</kbd> + <kbd>`</kbd> (快速雙擊兩下 `)
 
+
+#### 安裝新版的 vim
+
+```
+brew install vim --with-override-system-vi
+```
+
+
+#### Iterm2 設定
+
+1. 把字體調成 14
+2. 字體選擇 menlo for powerline
+3. 設定游標閃爍
