@@ -85,3 +85,8 @@ brew install vim --with-override-system-vi
 1. 把字體調成 14
 2. 字體選擇 menlo for powerline
 3. 設定游標閃爍
+
+
+#### TODO
+
+- 確認把 color/ 和 plugin/settings 移到 vim 底下，如果新機器沒有要幫他建立資料夾
