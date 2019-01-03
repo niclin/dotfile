@@ -78,7 +78,7 @@ def link_files(files)
 end
 
 def copy_setting_dirs_to_vim
-  dirs = Dir["*"] -%w[README.md Rakefile untils]
+  dirs = Dir["*"] -%w[README.md Rakefile untils images iTerm fonts]
 
   dirs.each do |dir|
     source = "#{Dir.pwd}/#{dir}"
