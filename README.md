@@ -36,9 +36,9 @@ wait a second be installment
 
 裝有 Powerline 的字體，如果 command line 用 iTerm 也別忘記修改，否則會出現一堆 `?`
 
-我個人都用 `Menlo for Powerline`
+我個人都用 `Menlo for Powerline` + `Inconsolata-dz-Powerline`
 
-[PowerLine](https://github.com/supermarin/powerline-fonts)
+這兩個字體可以讓 tmux + VIM 的一些特殊符號都正常顯示，我放在本專案的 fonts 底下了
 
 #### Dependence
 
