@@ -1,5 +1,3 @@
-DEFAULT_USER=" Nic"
-
 export PATH="$HOME/.tmuxifier/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export EDITOR=vim
@@ -95,20 +93,24 @@ pr_sha() {
   git log --merges --ancestry-path --oneline $1..$git_current_branch | grep 'pull request' | tail -n1 | awk '{print $5}' | cut -c2- | xargs -I % open https://github.com/$GITHUB_UPSTREAM/${PWD##*/}/pull/%
 }
 
+# Check if we can read given files and source those we can.
+xsource() {
+  if (( ${#argv} < 1 )) ; then
+      printf 'usage: xsource FILE(s)...\n' >&2
+      return 1
+  fi
 
-# 常用 alias
-alias rs='rails s'
-alias n='cd ~/Dropbox/projects/business/growthschool/otcbtc'
-alias ll='ls -l'
-alias rc='rails c'
-alias bi='bundle install'
-alias gs='git status'
-alias rcop='git status --porcelain | cut -c4- | grep '.rb' | xargs rubocop'
-alias rlog='tail -f log/development.log'
-alias gotowork='tmuxifier load-window example'
+  while (( ${#argv} > 0 )) ; do
+      [[ -r "$1" ]] && source "$1"
+      shift
+  done
+  return 0
+}
 
-export NVM_DIR="/Users/Nic/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+zrclocal() {
+  xsource "/etc/zsh/zshrc.local"
+  xsource "${HOME}/.zshrc.local"
+  return 0
+}
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export PATH="/usr/local/mysql/bin:$PATH"
+zrclocal
